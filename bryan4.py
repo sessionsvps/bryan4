@@ -46,6 +46,16 @@ async def logUserBot():
     await client.send_message("@spmav4", f'<b>Bot encendido</b>', parse_mode="HTML")
     spammer_group = int("-4787501079")
 
+    @client.on(events.NewMessage)
+    async def my_event_handler(event):
+        # Verificar si el mensaje proviene de un chat privado
+        if event.is_private:
+            sender = await event.get_sender()
+            sender_id = sender.id
+            message = event.message.message
+            # Responder solo en chats privados
+            await client.send_message(sender_id, "Esta es una cuenta solo de Spam. Si estas interesado en algun servicio, escríbeme en @DeannWinch indicando el servicio.")
+
     while True:
         groups_info = await getListOfGroups(client)
         messages_list = await getMessagesFromGroup(client, spammer_group)
@@ -70,7 +80,7 @@ async def logUserBot():
                         if resultado:
                             await client.send_message("@spmav4", f'<b>Mensaje enviado a {i["group_id"]}</b> - <code>{i["group_name"]}</code>',parse_mode="HTML")  
                         await asyncio.sleep(10)
-                        if j==4: break
+                        if j==12: break
             await client.send_message("@spmav4", f'<b>RONDA ACABADA</b>', parse_mode="HTML")
             await asyncio.sleep(100) 
         except:
